@@ -1,0 +1,335 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 9/10/2018, 02:25:02 PM
+    Author     : danny
+*/
+h1{
+    color:black !important;
+}
+
+.card-header{
+    background: #238276 !important;
+    color: white !important;
+}
+.card-header h3{
+    color: white !important;
+}
+.Title-sigre{
+    text-align: center;
+    padding: 10px 10px 10px 10px;
+}
+.ui-dialog{
+    border-radius: 15px;
+   
+    height: 520px;
+}
+.ui-dialog .ui-dialog-titlebar{
+    background: #238276;
+    color:white;
+    text-align: center;
+    width: auto !important;
+    
+}
+.ui-dialog .ui-dialog-content{
+   /* background: rgb(35, 130, 118, 0.7) !important;*/
+    
+      border-top: 2px solid rgb(252, 115, 35);
+    
+}
+
+.ui-datatable thead th, .ui-datatable tfoot td {
+    background: white;
+}
+.ui-button-icon-only .ui-button-text{
+    background:white !important;
+}
+.ui-widget-content{
+   color: black;
+}
+.ui-widget-header{
+    background: #238276;
+}
+.text-center{
+    color: white;
+}
+.ui-paginator .ui-paginator-current{
+    color: white;
+}
+
+.ui-paginator.ui-paginator-top{
+    background: #238276;
+} 
+btn  ml-auto btn-block btn-hidden-prime{
+    margin-top: 6px;
+}
+
+.nav-dashboard {
+    outline: 0;
+    display: block;
+    padding: 0 !important;
+    font-weight: 700;
+    text-align: center;
+    background: #238276 !important;
+    color: white;
+    border-radius: 0px;
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143 !important;
+    margin-bottom: 3px;
+}
+
+
+/*.nav-dashboard:hover {
+    color: #fff;
+    text-decoration: none;
+    
+}*/
+
+.ui-menu-list {
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+#dlg-expire .ui-dialog .ui-dialog-titlebar {
+    display: none !important;
+}
+
+#form-ppal\:menu-ppal li {
+    font-size: 1.1rem;
+    margin: 0;
+    border-radius: 0;
+}
+
+#form-ppal\:menu-ppal li a {
+    padding: 15px;
+    border: 0;
+    border-radius: 0;
+    line-height: 14px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+#form-ppal\:menu-ppal li a:hover {
+    background: #55B548 !important;
+    box-shadow: none !important;
+}
+
+#form-ppal\:menu-ppal li .modules-nav {
+    padding-top: 25px !important; 
+    padding-bottom: 25px !important; 
+}
+
+.show {display:block;}
+
+.input-hidden-prime {
+    text-shadow: none !important;
+    padding: 0.375rem 0.75rem !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+
+}
+
+.btn-hidden-prime {
+    text-shadow: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    background: #FC7323 !important;
+    border-color: #238276 !important;
+    padding: 0.375rem 0.75rem !important;
+    font-family: 'RobotoDraft', 'Roboto', sans-serif;
+    font-size: 18px !important;
+    font-weight: bold !important;
+
+}
+
+.btn-hidden-prime:hover {
+    text-shadow: none !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    color: #fff !important;
+    background:#238276 !important;
+    border-color: #238276 !important;
+
+}
+
+.file-input{
+    position: relative;
+    width: 100%;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.ui-fileupload-buttonbar {
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    border-radius: 3px;
+    text-shadow: none !important;
+    padding: 0.375rem 0.75rem !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    border-bottom-width: 0;
+    
+}
+
+.ui-fileupload-content {
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    border-radius: 3px;
+    text-shadow: none !important;
+    padding: 1px !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+
+.file {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.file-label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    border-radius: 3px;
+}
+.ui-fileupload-buttonbar .ui-button {
+    vertical-align: middle;
+    margin-right: .2em;
+    align-items: center;
+    padding: 0.3rem 0.3rem;
+    margin-bottom: 0;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #495057;
+    text-align: center;
+    white-space: nowrap;
+    background: #fbfbfc;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    border-radius: 3px;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.ui-fileupload-cancel {
+    vertical-align: middle;
+    margin-right: .2em;
+    align-items: center;
+    padding: 0.3rem 0.3rem !important;
+    margin-bottom: 0;
+    font-size: 0.9375rem !important;
+    font-weight: 400 !important;
+    line-height: 1;
+    color: #495057 !important;
+    text-align: center !important;
+    white-space: nowrap;
+    background: #fbfbfc !important;
+    border: 1px solid rgba(0, 40, 100, 0.12) !important;
+    border-radius: 3px;
+    text-shadow: none !important;
+    box-shadow: none;
+}
+
+.ui-fileupload-content .ui-progressbar {
+    border-radius: 2px !important;
+}
+
+.ui-fileupload-content .ui-progressbar .ui-progressbar-value {
+    border-radius: 2px !important;
+    background:#55B548 !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.div-validate {
+    padding: 0 0 15px 0; }
+
+.div-form-validate {
+    padding-bottom: 1px; }
+
+.invalid {
+    font-family: 'RobotoDraft', 'Roboto', sans-serif;
+    font-size: 12px !important;
+    font-weight: bold;
+/* color: #F44337 !important;*/
+    color: #55B548 !important;
+    background-color: transparent !important;
+    border-color: transparent !important;
+}
+
+.ui-password-info {
+    margin: 0 !important;
+    color: #000 !important;
+    text-shadow: none !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 2 !important;
+}
+
+.ui-password-panel {
+    padding: 4px 4px 0px 4px !important;
+    width: 150px !important;
+    background: #fff !important;
+    margin-top: -16px !important;
+    border: 0.01rem solid #9e9e9e !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    font-family: 'RobotoDraft', 'Roboto', sans-serif !important;
+}
+
+.fancy-checkbox {
+    cursor: pointer;
+}
+
+
+.fancy-checkbox input[type="checkbox"],
+.fancy-checkbox .checked {
+    display: none;
+
+}
+
+.fancy-checkbox input[type="checkbox"]:checked ~ .checked
+{
+    display: inline-block;
+}
+
+.fancy-checkbox input[type="checkbox"]:checked ~ .unchecked
+{
+    display: none;
+    cursor: pointer;
+}
+
+#form-ppal\:menu-ppal .ui-icon {
+    /* display: inline-block; */
+    float: none !important;
+    background-image: none !important;
+    display: initial !important;
+    padding-left: 3px !important;
+    position: relative !important;
+    bottom: 2px !important;
+}

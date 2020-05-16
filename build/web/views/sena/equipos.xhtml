@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/views/templates/menu-layout.xhtml">
+        <ui:define name="bodyContent">
+            <style>
+                #dlg-expire .ui-dialog-titlebar {
+                    display: none !important;
+                }
+            </style>
+            <p:idleMonitor timeout="300000" onactive="PF('idleDialog').show()" />  
+
+            <p:dialog widgetVar="idleDialog" header="Expiro la Sesión" resizable="false" styleClass="modal-login" id="dlg-expire"
+                      modal="true" width="400">  
+                <div class="modal-body text-center">
+                    <h3 style="color: #000;">Reconectese!!!</h3>
+                    <hr/>
+                    <input id="confirmBackToLogin" type="button" value="ir a Login" class="btn  ml-auto btn-block btn-hidden-prime"
+                           onclick="window.location = '#{facesContext.externalContext.requestContextPath}/views/logOn.xhtml';" />
+                </div>
+
+            </p:dialog> 
+            <script type="text/javascript">
+                PrimeFaces.locales['es'] = {
+                    closeText: 'cerrar',
+                    prevText: 'previo',
+                    nextText: 'siguiente',
+                    currentText: 'actual',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                        'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    dayNamesShort: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                    weekHeader: 'Semana',
+                    firstDay: 1,
+                    isRTL: false,
+                    showMonthAfterYear: false,
+                    yearSuffix: '',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día',
+                    allDayText: 'Todos los Días',
+                    timeOnlyTitle: 'Nur Zeit',
+                    timeText: 'Tiempo',
+                    hourText: 'Hora',
+                    minuteText: 'Minuto',
+                    secondText: 'Segundo'
+                };
+            </script>
+            <style type="text/css">
+                .value {
+                    width: 1000px;
+                }
+
+
+                #ui-datepicker-div .ui-widget-header{
+                    padding: 0.5rem 1.5rem !important;
+                    display: flex;
+                }
+
+                .ui-datepicker .ui-datepicker-title {
+                    margin: 0 40px;
+                }
+
+                .ui-widget-header {
+                    padding: 0!important;
+                    margin: 0 !important;
+                    display: table-cell;
+                    min-height: 1.5rem;
+                    -ms-flex-align: center;
+                    background: #fff;
+                    background-clip: border-box;
+                    border: 1px solid rgba(0, 40, 100, 0.12);
+                    border-radius: 3px;
+                }
+
+                .fc-agendaWeek-view .ui-widget-header {
+                    padding: 0 !important;
+                }
+
+                .ui-widget-content {
+                    border-radius: 0 !important;
+                    border: 1px solid rgba(0, 40, 100, 0.28);
+                    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important;
+                }
+
+                .ui-dialog .ui-dialog-titlebar {
+                    padding: .4em .4em .4em 1em !important;
+                    display: block;
+                }
+
+                .ui-state-highlight {
+                    border: 1px solid rgba(16, 17, 19, 0.16) !important;
+                    background: #b2b8bf !important;
+                }
+                #edit-reserva\:from_input{
+                    text-shadow: none !important;
+                    padding: 0.375rem 0.75rem !important;
+                    border-radius: 3px !important;
+                    box-shadow: none !important;
+                    height: calc(2.25rem + 2px);
+                    right: 14px;
+                    position: relative;
+                    bottom: 7px;
+                }
+
+                #create-reserva\:from-create_input{
+                    text-shadow: none !important;
+                    padding: 0.375rem 0.75rem !important;
+                    border-radius: 3px !important;
+                    box-shadow: none !important;
+                    height: calc(2.25rem + 2px);
+                    right: 14px;
+                    position: relative;
+                    bottom: 7px;
+                }
+                #edit-reserva\:to_input{
+                    text-shadow: none !important;
+                    padding: 0.375rem 0.75rem !important;
+                    border-radius: 3px !important;
+                    box-shadow: none !important;
+                    height: calc(2.25rem + 2px);
+                    right: 14px;
+                    position: relative;
+                    bottom: 7px;
+                }
+                #create-reserva\:to-create_input{
+                    text-shadow: none !important;
+                    padding: 0.375rem 0.75rem !important;
+                    border-radius: 3px !important;
+                    box-shadow: none !important;
+                    height: calc(2.25rem + 2px);
+                    right: 14px;
+                    position: relative;
+                    bottom: 7px;
+                }
+                .input-hidden-prime {
+                    width: 90%;
+                }
+                .btn-secondary {
+                    color: #495057 !important;
+                    background-color: #fff !important;
+                    border-color: rgba(0, 40, 100, 0.12) !important;
+                    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05) !important;
+                }
+
+                #update-form\:result .ui-datatable-header {
+                    width: 150px;
+                    position: relative;
+                    bottom: 4px;
+                    left: 0px;
+                    border-radius: 15px;
+                }
+
+                #update-form\:result .ui-paginator-bottom {
+                    border-top: 0 none;
+                    left: 318px;
+                    position: relative;
+                }
+
+                #consultar-form\:result_equipos .ui-datatable-header {
+                    width: 150px;
+                    position: relative;
+                    bottom: 4px;
+                    left: 0px;
+                    border-radius: 15px;
+                }
+
+                #consultar-form\:result_equipos .ui-paginator-bottom {
+                    border-top: 0 none;
+                    left: 318px;
+                    position: relative;
+                }
+
+
+                .color-red {
+
+                    background-color: #F44337;
+                }
+                .color-blue {
+
+                    background-color: #0052b6;
+                }
+               
+            </style>
+            <c:if test="#{loginBean.rol eq 'ADMIN' or loginBean.rol eq 'FUNCIONARIO' or loginBean.rol eq 'INSTRUCTOR' or loginBean.rol eq 'APRENDIZ'}">
+
+                <div class="row">
+                    <div class="col-lg-1 ">
+
+                    </div>
+                    <div class="col-lg-10 ml-1 text-right">
+                        <div class="row align-items-center">
+
+                            <div id="formulario" style="margin-left: 335px;" class="row align-items-center">
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <p:commandButton value="Buscar" styleClass="btn btn-primary ml-auto btn-hidden-prime"  oncomplete="PF('buscares').show();" />
+                                </h:panelGrid>
+                                <h:panelGrid>
+                                    <p:commandButton value="Ver Equipos" styleClass="btn btn-primary ml-auto btn-hidden-prime"   oncomplete="PF('consulta_equipos').show();"/>
+                                </h:panelGrid>
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <p:commandButton value="Crear reserva" styleClass="btn btn-primary ml-auto btn-hidden-prime"   oncomplete="PF('reserveDialog').show();"/>
+                                </h:panelGrid>
+
+
+                                <p:dialog widgetVar="buscares" modal="true"  header="Informacion de la reserva de los equipos"
+                                          showEffect="clip" hideEffect="clip"  width="900px" id="consulta_reserva-dialog">
+                                    <h:form id="update-form">
+                                        <p:messages id="msj-update" showDetail="true" autoUpdate="true" closable="true" globalOnly="false"/>
+                                        <p:tab>
+                                            <h:panelGrid>
+                                                <p:dataTable id="result" var="equis" value="#{equiporeservaBean.scheduleList}"
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorPosition="bottom"
+                                                             paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10"
+                                                             reflow="true"
+                                                             selectionMode="single" 
+                                                             rowKey="#{equis.idPeticionEquipo}"
+                                                             widgetVar="tablareservas" emptyMessage="Debe buscar el equipo O no esta en la base de Datos"
+                                                             filteredValue="#{equiporeservaBean.filtro}" >
+
+                                                    <f:facet name="header">
+                                                        <p:outputPanel>
+                                                            <p:inputText id="globalFilter"  onkeyup="PF('tablareservas').filter()"  placeholder="Buscar" />
+                                                        </p:outputPanel>
+                                                    </f:facet>
+
+
+
+                                                    <p:column   filterBy="#{equis.equipoIdEquipo.nombre}" headerText="Equipo" style="width: 10px;">
+                                                        <h:outputText  value="#{equis.equipoIdEquipo.nombre}" />
+                                                    </p:column>
+                                                    <p:column   filterBy="#{equis.personaIdusuario.nombre}" headerText="Reservado por:" style="width: 10px;">
+                                                        <h:outputText  value="#{equis.personaIdusuario.nombre}" />
+                                                    </p:column>
+                                                    <p:column   filterBy="#{equis.fechaInicio}" headerText="Fecha Inicial" style="width: 10px;">
+                                                        <h:outputText  value="#{equis.fechaInicio}" />
+                                                    </p:column>
+
+                                                    <p:column  filterBy="#{equis.fechaFinal}" headerText="Fecha Final" style="width: 10px;">
+                                                        <h:outputText  value="#{equis.fechaFinal}" />
+                                                    </p:column>
+
+                                                    <p:column  headerText="Hora Inicial" style="width: 10px;" >
+                                                        <h:outputText value="#{equis.horaInicio}"  />
+                                                    </p:column>
+
+                                                    <p:column  headerText="Hora Final" style="width: 10px;" >
+                                                        <h:outputText value="#{equis.horaFin}"  />
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </h:panelGrid>
+                                        </p:tab>
+                                    </h:form>
+                                </p:dialog>
+                                <p:dialog widgetVar="consulta_equipos" modal="true" header="Informacion de los Equipos" showEffect="clip" hideEffect="clip" id="consulta_equipos-dialog" width="900px">
+                                    <h:form id="consultar-form">
+                                        <p:tab>
+                                            <h:panelGrid >
+
+                                                <p:dataTable id="result_equipos" var="equi" value="#{equiposBean.equipos}"
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorPosition="bottom"
+                                                             paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10"
+                                                             reflow="fals"
+                                                             selectionMode="single" 
+                                                             rowKey="#{equi.idEquipo}"
+                                                             widgetVar="tablaEquipos" emptyMessage="No existe en la base de datos"
+                                                             filteredValue="#{equiposBean.filtro}"
+                                                             >
+
+                                                    <f:facet name="header">
+                                                        <p:outputPanel>
+                                                            <p:inputText id="globalFilter"  onkeyup="PF('tablaEquipos').filter()" style="width: 150px" placeholder="Buscar" />
+                                                        </p:outputPanel>
+                                                    </f:facet>
+
+
+
+
+                                                    <p:column   filterBy="#{equi.nombre}" headerText="Nombre" style="width: 250px;">
+                                                        <h:outputText  value="#{equi.nombre}" />
+                                                    </p:column>
+
+                                                    <p:column  filterBy="#{equi.codigo}" headerText="Codigo" style="width: 150px;">
+                                                        <h:outputText  value="#{equi.codigo}" />
+                                                    </p:column>
+
+                                                    <p:column headerText="Descripción" style="width: 400px;" >
+                                                        <h:outputText value="#{equi.descripcion}"  />
+                                                    </p:column>
+                                                </p:dataTable>
+
+                                            </h:panelGrid>
+                                        </p:tab>
+                                    </h:form>
+                                </p:dialog>
+                            </div>
+                        </div>
+                        <h:form id="form-edit-user" class="card">
+                            <p:messages closable="true" autoUpdate="false" globalOnly="false" showDetail="false"/>
+                            <div class="card-body">
+                                <p:schedule id="scheduleLocale" value="#{equiporeservaBean.equiporeservaModelo}" locale="es"  widgetVar="scheduleReserve" showWeekends="false" 
+                                            minTime="7:00" maxTime="22:30" firstHour="7" timeZone="GMT-5" initialDate="#{equiporeservaBean.sysdate}">
+                                    <p:ajax event="eventSelect" update="edit-dialog" oncomplete="PF('editResDialog').show();" listener="#{equiporeservaBean.onEventSelect}"/>
+
+                                    <p:ajax event="dateSelect" listener="#{equiporeservaBean.onDateSelect}" update="create-dialog" oncomplete="PF('reserveDialog').show();" />
+
+                                </p:schedule>
+                            </div>
+                        </h:form>    
+                    </div>
+                </div>
+
+                <p:dialog widgetVar="reserveDialog" modal="true" header="Reservar Equipo" 
+                          showEffect="clip" hideEffect="clip" id="create-dialog" width="650px">
+                    <h:form id="create-reserva">
+                        <p:messages closable="true" autoUpdate="true" globalOnly="false" showDetail="false"/>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label class="form-label">Seleccione Equipo:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon6">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-pen-alt"></i>
+                                                </span>
+                                            </span>
+                                            <p:selectOneMenu id="create-ambiente" value="#{equiporeservaBean.equipo}" converter="equipoConverter" 
+                                                             autoWidth="true" panelStyleClass="width:392px"
+
+
+                                                             effect="fade" styleClass="select-hidden-prime panel-width" >
+                                                <f:selectItems value="#{equiporeservaBean.equipos}" var="equi" itemLabel="#{equi.nombre} - #{equi.codigo} - #{equi.descripcion}" itemValue="#{equi}" />
+                                            </p:selectOneMenu>
+
+                                            <p:message id="msj-ambiente-cr" for="create-ambiente" styleClass="invalid" display="text"/>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Fecha Inicial:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon2">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-clock"></i>
+                                                </span>
+                                            </span>
+
+                                            <p:calendar id="from-create" value="#{equiporeservaBean.fromDate}" timeZone="GMT-5" minHour="7" maxHour="22"
+                                                        pattern="dd/MM/yyyy HH:mm" locale="es" styleClass="form-control input-hidden-prime"
+                                                        disabledWeekends="true" mindate="#{equiporeservaBean.sysdate}"  required="true"
+                                                        requiredMessage="Se requiere fecha inicio de la reserva">
+                                                <p:ajax event="dateSelect" listener="#{equiporeservaBean.startDateFilter}" update="to-create"/>
+                                                <p:ajax event="keyup" update="msj-from-cr"/>
+                                            </p:calendar> 
+                                            <p:message id="msj-from-cr" for="from-create" styleClass="invalid" display="text"/>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-lg-2"></div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Fecha Final:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon3">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-clock"></i>
+                                                </span>
+                                            </span>
+
+                                            <p:calendar id="to-create" value="#{equiporeservaBean.toDate}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm" disabledWeekends="true" minHour="7" maxHour="22"
+                                                        locale="es"  styleClass="form-control input-hidden-prime" required="true" mindate="#{equiporeservaBean.minDate}"
+                                                        requiredMessage="Se requiere fecha fin de la reserva">
+                                                <p:ajax event="keyup" update="msj-to-cr"/>
+                                            </p:calendar>
+                                            <p:message id="msj-to-cr" for="to-create" styleClass="invalid" display="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer text-right">
+                                <div class="btn-list mt-4 text-right">
+
+
+                                    <p:commandButton id="addButton" value="Crear Reserva del Equipo" 
+                                                     styleClass="btn btn-primary ml-auto btn-hidden-prime" update="@form, form-edit-user "
+                                                     action="#{equiporeservaBean.create()}"/>
+                                </div>
+                            </div>
+                        </div> 
+                    </h:form>
+
+                </p:dialog>
+
+                <p:dialog widgetVar="editResDialog" modal="true" header="Información de la Reserva del Equipo" 
+                          showEffect="clip" hideEffect="clip" id="edit-dialog" width="650px">
+                    <h:form id="editPeticionEquipo">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label class="form-label">Título de la reserva:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon1">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-pen-alt"></i>
+                                                </span>
+                                            </span>
+                                            <p:inputText styleClass="input-hidden-prime" id="title" disabled="true"
+                                                         value="#{equiporeservaBean.editPeticionEquipo.title}" required="true" placeholder="Título"
+                                                         requiredMessage="Se requiere información de la reserva">
+                                                <p:ajax event="keyup" update="msj-title"/>
+                                            </p:inputText>
+                                        </div>
+                                        <p:message id="msj-title" for="title" styleClass="invalid" display="text"/>
+                                    </div>
+                                </div>  
+                                <div class="row mt-2">
+                                    <div class="col-lg-12">
+                                        <label class="form-label">Descripción:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon4">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-pen-alt"></i>
+                                                </span>
+                                            </span>
+                                            <p:inputTextarea id="edit-desc" styleClass="input-hidden-prime" disabled="true"
+                                                             value="#{equiporeservaBean.editPeticionEquipo.description}" required="true" placeholder="Descripción"
+                                                             requiredMessage="Se requiere descripción de la reserva">
+                                                <p:ajax event="keyup" update="msj-edit-cr"/>
+
+                                            </p:inputTextarea>
+
+                                            <p:message id="msj-edit-cr" for="edit-desc" styleClass="invalid" display="text"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Fecha Inicial:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon2">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-clock"></i>
+                                                </span>
+                                            </span>
+
+                                            <p:calendar id="from" value="#{equiporeservaBean.editPeticionEquipo.startDate}" timeZone="GMT-5" minHour="7" maxHour="22"
+                                                        pattern="dd/MM/yyyy HH:mm" locale="es" styleClass="form-control input-hidden-prime" disabled="true"
+                                                        disabledWeekends="true" mindate="#{equiporeservaBean.sysdate}"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2"></div>
+                                    <div class="col-lg-4">
+                                        <label class="form-label">Fecha Final:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-prepend" id="basic-addon3">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-clock"></i>
+                                                </span>
+                                            </span>
+
+                                            <p:calendar id="to" value="#{equiporeservaBean.editPeticionEquipo.endDate}" timeZone="GMT-5" pattern="dd/MM/yyyy HH:mm" disabledWeekends="true" minHour="7" maxHour="22"
+                                                        locale="es"  styleClass="form-control input-hidden-prime" disabled="true" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <c:if test="#{loginBean.rol eq 'FUNCIONARIO' or loginBean.rol eq 'APRENDIZ' or loginBean.rol eq 'INSTRUCTOR' and equiporeservaBean.countid == 1}">
+
+                                <div class="card-footer text-right">
+                                    <div class="btn-list mt-4 text-right">
+
+                                        <p:commandButton 
+                                            disabled="#{equiporeservaBean.isDeleteable}"
+                                            id="editButton" value="Eliminar" action="#{equiporeservaBean.delete(equiporeservaBean.editPeticionEquipo.data)}"  onclick="PF('scheduleLocale').close()"  resetValues="true"
+                                            styleClass="btn btn-primary ml-auto btn-hidden-prime"/>
+                                    </div>
+                                </div>
+                            </c:if>
+                            <c:if test="#{loginBean.rol eq 'ADMIN'}">
+
+                                <div class="card-footer text-right">
+                                    <div class="btn-list mt-4 text-right">
+
+                                        <p:commandButton id="editButton2" value="Eliminar" action="#{equiporeservaBean.delete(equiporeservaBean.editPeticionEquipo.data)}"  onclick="PF('scheduleLocale').close()"  resetValues="true"
+                                                         styleClass="btn btn-primary ml-auto btn-hidden-prime"/>
+                                    </div>
+                                </div>
+                            </c:if>
+
+
+                        </div>
+
+
+                    </h:form>
+                </p:dialog>
+
+
+            </c:if>
+
+            <c:if test="#{loginBean.rol ne 'ADMIN' and loginBean.rol ne 'FUNCIONARIO' and loginBean.rol ne 'APRENDIZ' and loginBean.rol ne 'INSTRUCTOR'}">
+
+                <h1>NO PUEDE ENTRAR</h1>
+            </c:if>
+
+
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,147 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/views/templates/menu-layout.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:define name="headContent">
+        <style>
+            #dlg-expire .ui-dialog-titlebar {
+                display: none !important;
+            }
+        </style>
+        <p:idleMonitor timeout="300000" onactive="PF('idleDialog').show()" />  
+
+        <p:dialog widgetVar="idleDialog" header="Expiro la Sesión" resizable="true" showEffect="clip" hideEffect="clip" styleClass="modal-login" id="dlg-expire"
+                   modal="true" width="400">  
+            <div class="modal-body text-center">
+                <h3 style="color: #000;">Reconectese!!!</h3>
+                <hr/>
+                <input id="confirmBackToLogin" type="button" value="ir a Login" class="btn  ml-auto btn-block btn-hidden-prime"
+                       onclick="window.location = '#{facesContext.externalContext.requestContextPath}/views/logOn.xhtml'" />
+            </div>
+
+        </p:dialog>  
+    </ui:define>
+
+    <ui:define name="bodyContent">
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">
+                    
+                </h1>
+            </div>
+
+            <div class="row row-cards">
+                <div class="col-2">                   
+                </div>
+                <div class="col-6 col-sm-4 col-lg-2">
+                    <div class="card">
+                        <div class="card-body p-3 text-center" style="color: #000;">
+                            <div class="text-right text-green">
+                                SENA
+                                
+                            </div>
+                            <div class="h1 m-0">
+                                <p:outputLabel value="#{programaBean.contarProg()}" />
+                            </div>
+                            <div class="mb-4">Programas</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-4 col-lg-2">
+                    <div class="card">
+                        <div class="card-body p-3 text-center" style="color: #000;">
+                            <div class="text-right text-green">
+                                SENA
+                                
+                            </div>
+                            <div class="h1 m-0">
+                                <p:outputLabel value="#{ambientesBean.contarAmbientes()}" />
+                            </div>
+                            <div class="mb-4">Ambientes</div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-6 col-sm-4 col-lg-2">
+                    <div class="card">
+                        <div class="card-body p-3 text-center" style="color: #000;">
+                            <div class="text-right text-green">
+                                SENA
+                                
+                            </div>
+                            <div class="h1 m-0">
+                                <p:outputLabel value="#{fichaBean.contarFichas()}" />
+                            </div>
+                            <div class="mb-4">Fichas</div>
+                        </div>
+                    </div>
+                </div>
+                  <div class="col-6 col-sm-4 col-lg-2">
+                    <div class="card">
+                        <div class="card-body p-3 text-center" style="color: #000;">
+                            <div class="text-right text-green">
+                                SENA
+                                
+                            </div>
+                            <div class="h1 m-0">
+                                <p:outputLabel value="#{userBean.contarUsuarios()}" />
+                            </div>
+                            <div class="mb-4" >Usuarios</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    
+                </div>
+            </div>
+
+            <div class="row row-cards row-deck">
+                <div class="col-lg-6">
+                    <div class="card card-aside">
+                        <a href="#" class="card-aside-column" 
+                           style="background-image: url(../resources/images/office.png)"></a>
+                        <div class="card-body d-flex flex-column">
+                            <h4><a href="#">Servicio Nacional de Aprendizaje.</a></h4>
+                            <div class="text-muted" style="color: #000 !important;">Encargado de cumplir la función que le corresponde al Estado de invertir en el desarrollo social y técnico de los trabajadores colombianos, ofreciendo y ejecutando la Formación Profesional Integral gratuita</div>
+                            <div class="d-flex align-items-center pt-5 mt-auto">
+                                <div class="avatar avatar-md mr-3" style="background-image: url(../resources/images/profile.png)"></div>
+                                <div>
+                                    <a href="./profile.html" class="text-default" style="color: #000 !important;" >Admin principal</a>
+                                    <small class="d-block text-muted" style="color: #000 !important;">15 days may</small>
+                                </div>
+                                <div class="ml-auto text-muted">
+                                    <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card card-aside">
+                        <a href="#" class="card-aside-column" style="background-image: url(../resources/images/sigre.jpeg)"></a>
+                        <div class="card-body d-flex flex-column">
+                            <h4><a href="#">Sistema Integral de Gestión de Recursos</a></h4>
+                            <div class="text-muted" style="color: #000 !important;">Aplicación  WEB que  permite administrar y consultar la información de los ambientes y equipos del SENA</div>
+                            <div class="d-flex align-items-center pt-5 mt-auto">
+                                <div class="avatar avatar-md mr-3" style="background-image: url(../resources/images/profile.png)"></div>
+                                <div>
+                                    <a href="./profile.html" class="text-default" style="color: #000 !important;">Admin principal</a>
+                                    <small class="d-block text-muted" style="color: #000 !important;">15 days may</small>
+                                </div>
+                                <div class="ml-auto text-muted">
+                                    <a href="javascript:void(0)" class="icon d-none d-md-inline-block ml-3"><i class="fe fe-heart mr-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </ui:define>
+
+</ui:composition>

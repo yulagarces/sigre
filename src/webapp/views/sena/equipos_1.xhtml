@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:composition template="/views/templates/menu-layout.xhtml">
+        <ui:define name="bodyContent">
+            <style>
+                #dlg-expire .ui-dialog-titlebar {
+                    display: none !important;
+                }
+            </style>
+            <p:idleMonitor timeout="300000" onactive="PF('idleDialog').show()" />  
+
+            <p:dialog widgetVar="idleDialog" header="Expiro la Sesión" resizable="false" styleClass="modal-login" id="dlg-expire"
+                      modal="true" width="400">  
+                <div class="modal-body text-center">
+                    <h3 style="color: #000;">Reconectese!!!</h3>
+                    <hr/>
+                    <input id="confirmBackToLogin" type="button" value="ir a Login" class="btn  ml-auto btn-block btn-hidden-prime"
+                           onclick="window.location = '#{facesContext.externalContext.requestContextPath}/views/logOn.xhtml'" />
+                </div>
+
+            </p:dialog> 
+
+            <c:if test="#{loginBean.rol eq 'ADMIN'}">
+                <h1 class="Title-sigre">GESTION DE EQUIPOS</h1>
+                <div class=""><!-- Contenedor fomulario (COL)-->
+                    <h:panelGrid columns="1" cellpadding="5">
+                        <p:commandButton styleClass="btn  ml-auto btn-block btn-hidden-prime" value="Nuevo equipo" type="button"  onclick="PF('dlgEquipo').show();" />     
+                    </h:panelGrid>
+                    <p:dialog  header="CREAR EQUIPO" widgetVar="dlgEquipo" draggable="false" resizable="false" modal="true" height="auto" width="auto" >
+
+                        <h:form id="create-form" class="col-md-3"
+                                style="background-color: #f8f9fa; border: 1px solid rgba(35,130,118, 0.2);  max-width: 100%;
+                                margin: auto;  margin-top: 10px; padding: 20px; border-radius: 5px; position: relative; background-color: #fff;">
+                            <h:panelGrid columns="1" cellpadding="0">
+                                <div>
+                                    <h:outputLabel for="nombre" value="Nombre:" />
+                                    <div>
+                                        <p:inputText id="edit-nombre" required="true"  
+                                                     value="#{equiposBean.equipo.nombre}" 
+                                                     style="width:340px" 
+                                                     requiredMessage="Se requiere nombre"
+                                                     converterMessage="Tipo invalido">
+                                            <p:ajax event="keyup" update="msj-nombre"/>
+                                        </p:inputText>
+                                    </div>
+                                    <p:message id="msj-nombre" for="edit-nombre" styleClass="invalid" display="text"/>
+                                </div>
+
+                                <div>
+                                    <h:outputLabel for="codigo" value="Codigo SN:" />
+                                    <div>
+                                        <p:inputText id="edit-codigo" required="true"  
+                                                     value="#{equiposBean.equipo.codigo}" 
+                                                     style="width:340px" 
+                                                     requiredMessage="Se requiere codigo SN"
+                                                     converterMessage="Tipo invalido">
+                                            <p:ajax event="keyup" update="msj-codigo"/>
+                                        </p:inputText>
+                                    </div>
+                                    <p:message id="msj-codigo" for="edit-codigo" styleClass="invalid" display="text"/>
+                                </div>                                              
+
+
+
+                                <h:outputLabel for="descripcion" value="Descripción:" />
+                                <p:inputText id="descripcion" required="false"  value="#{equiposBean.equipo.descripcion}"  style="width:340px" />
+
+                                
+                                <h:outputLabel for="create-ambiente" value="Ubicacion: "/> 
+                                <p:selectOneMenu id="create-ambiente" value="#{equiposBean.ambiente}" converter="ambienteEquipoConverter" 
+                                                 autoWidth="true" style="width: 340px;"
+                                                 effect="fade" styleClass="select-hidden-prime panel-width" >
+                                    <f:selectItems value="#{equiposBean.ambientes}" var="ambi" itemLabel="#{ambi.nombre}" itemValue="#{ambi}" />
+                                </p:selectOneMenu>
+                                
+                                <br/>
+                                <f:facet name="footer">
+                                    <p:commandButton  styleClass="btn  ml-auto btn-block btn-hidden-prime"  resetValues="true"  label="guardar" value="Crear" class="btn  ml-auto btn-block btn-hidden-prime"
+                                                      action="#{equiposBean.createEquipo()}" 
+                                                      update="update-form:result" 
+                                                      onclick="PF('dlg').show()"/>
+
+                                </f:facet>  
+                            </h:panelGrid>
+                        </h:form>
+                    </p:dialog>
+                </div>
+
+                <!--UPDATE-->
+                <div>
+                    <h:form id="update-form">
+                        <p:messages id="msj-update" showDetail="true" autoUpdate="true" closable="true" globalOnly="false"/>
+
+                        <p:tab >
+                            <h:panelGrid >
+
+                                <p:dataTable id="result" var="equi" value="#{equiposBean.equipos}"
+                                             rows="10"
+                                             paginator="true"
+                                             paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10"
+                                             reflow="true"
+                                             selectionMode="single" 
+                                             rowKey="#{equi.idEquipo}"
+                                             widgetVar="tablaEquipos" emptyMessage="No existe en la base de datos"
+                                             filteredValue="#{equiposBean.filtro}">
+
+                                    <f:facet name="header">
+                                        <p:outputPanel>
+                                            <p:inputText id="globalFilter"  onkeyup="PF('tablaEquipos').filter()" style="width: 150px" placeholder="Buscar" />
+                                        </p:outputPanel>
+                                    </f:facet>
+
+
+
+
+                                    <p:column   filterBy="#{equi.nombre}" headerText="Nombre" style="width: 250px;">
+                                        <h:outputText  value="#{equi.nombre}" />
+                                    </p:column>
+
+                                    <p:column  filterBy="#{equi.codigo}" headerText="Codigo" style="width: 150px;">
+                                        <h:outputText  value="#{equi.codigo}" />
+                                    </p:column>
+
+                                    <p:column filterBy="#{equi.descripcion}" headerText="Descripción" style="width: 400px;" >
+                                        <h:outputText value="#{equi.descripcion}"  />
+                                    </p:column>
+
+
+
+                                   
+
+
+                                    <p:column  headerText="Editar" style="text-align: center; width: 90px;" >
+                                        <p:commandButton icon="fa fa-edit" 
+                                                         update=":update-form:updateDetail" title="abrir" oncomplete="PF('updateDialog').show()">
+                                            <f:setPropertyActionListener value="#{equi}" target="#{equiposBean.equipoSeleccionado}" />
+                                        </p:commandButton>
+                                    </p:column>
+
+
+<!--                                    <p:column  headerText="Eliminar" style=" text-align: center;width: 90px;" >
+                                        <p:commandButton icon="fa fa-trash"  onclick="PF('deleteDialog').show();"
+                                                         update=":update-form:delete-form" title="eliminar" >
+                                            <f:setPropertyActionListener value="#{equi}" target="#{equiposBean.equipoSeleccionado}" />
+                                        </p:commandButton>
+                                    </p:column>-->
+
+
+                                </p:dataTable>
+
+                                <p:dialog header="" 
+                                          widgetVar="deleteDialog"
+                                          height="150"  width="380"
+                                          draggable="false" modal="true" resizable="false">
+                                    <h:outputText value="Esta seguro de eliminar?" />
+
+                                    <h:form id="delete-form" > <hr/>
+                                        <div style="width:150px ; height: 50px; margin-left: 100px !important;">
+                                            <p:commandButton  value="SI" action="#{equiposBean.deleteEquipo(equiposBean.equipoSeleccionado)}"
+                                                          onclick="PF('deleteDialog').close();" style="background: transparent !important;"
+                                                          update=":update-form:result, :update-form:msj-update"/>
+
+                                        <p:commandButton  value="NO" onclick="PF('deleteDialog').close();" style="background: transparent !important;"/>
+                                    </div>
+                                    </h:form>
+
+                                </p:dialog>
+
+
+                                <p:dialog header="Datos del equipo" widgetVar="updateDialog" draggable="false"
+                                          modal="true" resizable="false">
+                                    <p:outputPanel id="updateDetail" >
+                                        <p:panelGrid  columns="2" rendered="#{not empty equiposBean.equipoSeleccionado}" >
+
+
+                                            <p:outputLabel value="Id ficha:"/>
+                                            <p:inputText value="#{equiposBean.equipoSeleccionado.idEquipo}" disabled="true"/>
+                                            
+                                            <h:outputLabel value="Nombre:" />
+                                            <p:inputText  value="#{equiposBean.equipoSeleccionado.nombre}" required="true"/>
+
+                                            
+                                            <h:outputLabel value="Codigo SN" />
+                                            <p:inputText   value="#{equiposBean.equipoSeleccionado.codigo}" required="false"/>
+
+                                           
+                                            <h:outputLabel value="Descripción:" />
+                                            <p:inputText  value="#{equiposBean.equipoSeleccionado.descripcion}" required="false"/>
+
+
+                                        </p:panelGrid>
+                                        <br/>
+                                        <p:commandButton class="form-control" value="Actualizar" styleClass="btn  ml-auto btn-block btn-hidden-prime" 
+                                                         action="#{equiposBean.updateEquipo(equiposBean.equipoSeleccionado)}" 
+                                                         onclick="PF('updateDialog').close();"     
+                                                         update="update-form:msj-update"/>
+                                    </p:outputPanel>
+                                </p:dialog> 
+                            </h:panelGrid>
+                        </p:tab>
+
+
+
+                    </h:form>
+
+                </div><!--Contenido tabla fin-->
+            </c:if>
+
+            <c:if test="#{loginBean.rol ne 'ADMIN'}">
+
+                <h1>NO PUEDE ENTRAR</h1>
+            </c:if>
+
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+
+    <ui:composition template="/views/templates/menu-layout.xhtml">
+
+        <ui:define name="bodyContent">
+            <style>
+                #dlg-expire .ui-dialog-titlebar {
+                    display: none !important;
+                }
+                .ui-widget-header{
+                    color: #fff !important; 
+                }
+
+            </style>
+            <p:idleMonitor timeout="300000" onactive="PF('idleDialog').show()" />  
+
+            <p:dialog widgetVar="idleDialog" header="Expiro la Sesión" resizable="true" styleClass="modal-login" id="dlg-expire"
+                      modal="true" width="400">  
+                <div class="modal-body text-center">
+                    <h3 style="color: #000;">Reconectese!!!</h3>
+                    <hr/>
+                    <input id="confirmBackToLogin" type="button" value="ir a Login" class="btn  ml-auto btn-block btn-hidden-prime"
+                           onclick="window.location = '#{facesContext.externalContext.requestContextPath}/views/logOn.xthml';" />
+                </div>
+
+            </p:dialog> 
+            <c:if test="#{loginBean.rol eq 'ADMIN'}">
+                <div class="row">
+                    <div class="col-lg-3">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <span class="avatar avatar-xl mr-3">
+                                        <o:graphicImage styleClass="avatar avatar-xl mr-3"
+                                                        id="img-profile" value="#{imageUserBean.getImage(userBean.usuario.idusuario)}" 
+                                                        lastModified="#{userBean.lastModified}"/>
+                                    </span>
+                                    <div class="media-body">
+                                        <h3 class="mr-1">#{adminBean.fullNameUser}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <p:accordionPanel id="menu-admin" activeIndex="null">
+                            <p:tab title="Crear Usuario" titletip="clic para entrar" titleStyleClass="card">
+                                <h:form id="create-user-form">
+                                    <div class="card-header">
+                                        <h6>Datos básicos</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p:messages id="msj-create-user-form" closable="true" globalOnly="false" autoUpdate="false" showDetail="false" showIcon="false"/>
+                                        <fieldset class="form-fieldset">
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Número de identificación</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-user-tie"></i>
+                                                            </span>
+                                                        </span>
+                                                        <p:inputText styleClass="form-control input-hidden-prime" id="edit-document" 
+                                                                     required="true" placeholder="Documento de usuario" value="#{adminBean.newPer.documento}"
+                                                                     requiredMessage="Se requiere documento">
+
+                                                            <p:ajax event="keyup" update="msj-document"/>
+                                                        </p:inputText>
+
+
+
+                                                    </div>
+                                                    <p:message id="msj-document" for="edit-document" styleClass="invalid" display="text"/>
+
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Nombres</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-user-tie"></i>
+                                                            </span>
+                                                        </span>
+                                                        <p:inputText styleClass="form-control input-hidden-prime" id="create-nombre" 
+                                                                     required="true" placeholder="Nombre" value="#{adminBean.newPer.nombre}"
+                                                                     requiredMessage="Se requiere nombre ">
+
+                                                            <p:ajax event="keyup" update="msj-nombre"/>
+                                                        </p:inputText>
+                                                    </div>
+                                                    <p:message id="msj-nombre" for="create-nombre" styleClass="invalid" display="text"/>
+
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Apellidos</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-user-tie"></i>
+                                                            </span>
+                                                        </span>
+                                                        <p:inputText styleClass="form-control input-hidden-prime" id="create-apellido" 
+                                                                     required="true" placeholder="Apellido" value="#{adminBean.newPer.apellido}"
+                                                                     requiredMessage="Se requiere apellido ">
+
+                                                            <p:ajax event="keyup" update="msj-apellido"/>
+                                                        </p:inputText>
+                                                    </div>
+                                                    <p:message id="msj-apellido" for="create-apellido" styleClass="invalid" display="text"/>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Email</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fab fa-mailchimp"></i>
+                                                            </span>
+                                                        </span>
+                                                        <p:inputText styleClass="form-control input-hidden-prime" id="create-email" value="#{adminBean.newPer.email}"
+                                                                     placeholder="Email@email.com">
+                                                            <f:validator validatorId="valEmail"/>
+                                                            <p:ajax event="keyup" update="email-msg"/>
+                                                        </p:inputText>
+                                                    </div>
+                                                    <p:message id="email-msg" for="create-email" styleClass="invalid" display="text" />
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Celular</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-mobile"></i>
+                                                            </span>
+                                                        </span>
+                                                        <p:inputText styleClass="form-control input-hidden-prime" id="create-phone" value="#{adminBean.newPer.telefono}"
+                                                                     placeholder="Telefono">
+
+                                                            <p:ajax event="keyup" update="phone-msg"/>
+                                                        </p:inputText>
+
+                                                    </div>
+                                                    <p:message id="phone-msg" for="create-phone" styleClass="invalid" display="text" />
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <label class="form-label">Centro</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-arrow-circle-down"></i>
+                                                            </span>
+                                                        </span>
+
+                                                        <p:selectOneMenu styleClass="form-control custom-select select-hidden-prime panel-width" style="width: 60%;" id="create-centro"  value="#{adminBean.centroSeleccionado}" converter="CentroConvertidor" >
+                                                            <f:selectItems  
+                                                                value="#{adminBean.centros}" 
+                                                                var="prog" itemValue="#{prog}" itemLabel="#{prog.nombre}"/>
+                                                        </p:selectOneMenu>
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <div class="row mt-2">
+                                                <div class="col-lg-12">
+                                                    <center><h1>Cuenta del usuario</h1></center>
+                                                </div>
+
+
+
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label class="form-label">Nombre de Usuario</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-user-ninja"></i>
+                                                            </span>
+                                                        </span>
+                                                        <p:inputText styleClass="form-control input-hidden-prime" id="edit-username" value="#{adminBean.newUser.username}"
+                                                                     required="true" placeholder="Nombre de usuario"
+                                                                     requiredMessage="Se requiere usuario">
+                                                            <f:validator binding="#{valUser}"/>
+                                                            <p:ajax event="keyup" update="msj-username"/>
+                                                        </p:inputText>
+                                                    </div>
+                                                    <p:message id="msj-username" for="edit-username" styleClass="invalid" display="text"/>
+
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label class="form-label">Rol</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-arrow-circle-down"></i>
+                                                            </span>
+                                                        </span>
+
+                                                        <p:selectOneMenu id="console" value="#{adminBean.newUser.rol}" required="true"
+                                                                         requiredMessage="El rol es obligatorio"
+                                                                         styleClass="form-control custom-select select-hidden-prime">
+                                                            <f:selectItem itemLabel="Seleccione Un rol" itemValue="" />
+                                                            <f:selectItem itemLabel="Aprendiz" itemValue="APRENDIZ" />
+                                                            <f:selectItem itemLabel="Instructor" itemValue="INSTRUCTOR" />
+                                                            <f:selectItem itemLabel="Funcionario" itemValue="FUNCIONARIO" />
+
+
+                                                        </p:selectOneMenu>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div style="padding-bottom: 10px;"/>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+
+                                                    <label class="form-label">Contraseña Nueva<span class="form-required">*</span></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend "  id="basic-addon1">
+                                                            <label class="input-group-text fancy-checkbox">
+                                                                <input type="checkbox"  onclick="seePass('menu-admin:create-user-form:password')" />
+                                                                <i class="fas fa-eye unchecked"></i>
+                                                                <i class="fas fa-eye-slash checked"></i>
+                                                            </label>
+                                                        </span>
+                                                        <p:password maxlength="20" styleClass="form-control input-hidden-prime"
+                                                                    id="password" value="#{adminBean.pass}" required="true" requiredMessage="Se requiere contraseña Nueva"
+                                                                    placeholder="Contraseña" feedback="true" promptLabel="nivel de protección" weakLabel="débil"
+                                                                    goodLabel="normal" strongLabel="fuerte">
+                                                            <f:validator validatorId="valPass" />
+                                                            <f:validateLength minimum="5" maximum="20"  />
+                                                            <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                                                            <f:ajax event="blur" execute="password confirm" render="m_password" />
+                                                        </p:password>
+
+                                                    </div>
+                                                    <div class="input-group">
+                                                        <p:message id="m_password" for="password" styleClass="invalid" display="text" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label class="form-label">Confirmar Contraseña<span class="form-required">*</span></label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-prepend" id="basic-addon1">
+                                                            <label class="input-group-text fancy-checkbox">
+                                                                <input type="checkbox" onclick="seePass('menu-admin:create-user-form:confirm')" />
+                                                                <i class="fas fa-eye unchecked"></i>
+                                                                <i class="fas fa-eye-slash checked"></i>
+                                                            </label>
+                                                        </span>
+                                                        <p:password id="confirm" binding="#{confirmPassword}" maxlength="20" styleClass="form-control input-hidden-prime"
+                                                                    placeholder="Confirmar Contraseña" requiredMessage="Se requiere contraseña Nueva" required="true">
+                                                            <f:ajax event="keyup" execute="password confirm" render="m_password m_confirm" />
+                                                        </p:password>
+
+                                                    </div>
+                                                    <p:message id="m_confirm" for="confirm" styleClass="invalid" display="text" />
+                                                </div>
+                                            </div>
+
+                                        </fieldset>
+                                    </div>
+                                    <div class="card-footer text-right">
+                                        <div class="d-flex">
+                                            <p:commandButton styleClass="btn btn-primary ml-auto btn-hidden-prime"
+                                                             id="create-user" 
+                                                             value="Crear Usuario" 
+                                                             action="#{adminBean.createUser()}"
+
+                                                             update="@form"
+                                                             />
+                                        </div>
+                                    </div>
+                                    <p:tab title="Gestion de usuarios" titletip="clic para entrar" titleStyleClass="card">
+                                        <h:form id="update-form" >
+                                            
+
+                                            <h:panelGrid>
+                                                <p:dataTable id="result" var="usu" value="#{adminBean.listUsersPer}" 
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorPosition="bottom"
+                                                             paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10"
+                                                             reflow="true"
+                                                             styleClass="table-style"
+                                                             selectionMode="single" 
+                                                             rowKey="#{usu.usuario.idusuario}"
+                                                             emptyMessage="En el momento no hay usuarios activos" 
+                                                             >
+                                                    <f:facet name="header">
+                                                        Usuarios Activos
+                                                    </f:facet>
+                                                    <p:column  class="outstyle" headerText="Nombre">
+                                                        <h:outputText  value="#{usu.persona.nombre} #{usu.persona.apellido}" />
+                                                    </p:column>
+
+                                                    <p:column class="outstyle" headerText="Telefono"  >
+                                                        <h:outputText value="#{usu.persona.telefono}" />
+                                                    </p:column>
+
+                                                    <p:column class="outstyle" headerText="Email"  >
+                                                        <h:outputText value="#{usu.persona.email}" />
+                                                    </p:column>
+
+                                                </p:dataTable>
+                                            </h:panelGrid>
+                                        </h:form>
+                                    </p:tab>
+
+
+                                </h:form>
+                            </p:tab>
+                            <p:tab title="Asignar módulos" titletip="clic para entrar" titleStyleClass="card">
+                                <h:form id="form-user-module">
+                                    <div class="card-body">
+                                        <p:messages id="msj-asign-module" closable="true" globalOnly="false" autoUpdate="false" showDetail="false" showIcon="false"/>
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-8">
+                                                <label class="form-label">Seleccione Usuario:</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend" id="basic-addon1">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-arrow-down"></i>
+                                                        </span>
+
+                                                        <p:selectOneMenu id="user-module" value="#{adminBean.userModule}" converter="usuarioConverter" 
+                                                                         autoWidth="true" panelStyleClass="width:392px"
+                                                                         valueChangeListener="#{adminBean.changeUserSelection}"
+                                                                         effect="fade" var="t"  filter="true" filterMatchMode="startsWith"
+                                                                         styleClass="form-control custom-select select-hidden-prime panel-width" >
+                                                            <f:selectItems value="#{adminBean.listUsers}" var="user" itemLabel="#{user.username} - #{user.nombreCompleto}" itemValue="#{user}" />
+                                                            <p:ajax update="@this, pickList"/>
+                                                            <p:column class="card-body">
+                                                                <div class="media">
+                                                                    <span class="avatar avatar-lg m-0">
+                                                                        <o:graphicImage styleClass="avatar avatar-lg m-0"
+                                                                                        id="img-profile" value="#{imageUserBean.getImage(t.idusuario)}" lastModified="#{userBean.lastModified}"/>
+                                                                    </span>
+                                                                    <div class="media-body ml-2">
+                                                                        <h4 class="m-0">#{t.nombreCompleto}</h4>
+                                                                        <p class="text-muted mb-0">#{t.rol}</p>
+                                                                        <ul class="social-links list-inline mb-0 mt-2">
+
+                                                                            <li class="list-inline-item">
+                                                                                <a style="background: #dae5f5;" href="javascript:void(0)" title="#{user.persona.telefono}" data-toggle="tooltip" data-original-title="#{userBean.usuario.persona.telefono}"><i class="fe fe-phone"></i></a>
+                                                                            </li>
+                                                                            <li class="list-inline-item">
+                                                                                <a  style="background: #dae5f5;" href="javascript:void(0)" title="#{user.persona.email}" data-toggle="tooltip" data-original-title="#{userBean.usuario.persona.email}"><i class="fe fe-mail"></i></a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </p:column>
+
+                                                        </p:selectOneMenu>
+
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-8">
+                                                <label class="form-label">Seleccionar Módulos:</label>
+                                                <p:pickList id="pickList" value="#{adminBean.modules}" converter="moduloPickConverter"
+                                                            var="module" itemLabel="#{module.nombre}" itemValue="#{module}" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer text-right">
+                                        <div class="d-flex">
+                                            <p:commandButton id="moduleSubmit" value="Asignar Módulos" action="#{adminBean.assignModules()}"
+                                                             update="@form, pickList"  styleClass="btn btn-primary ml-auto btn-hidden-prime"/>
+                                        </div>
+
+                                    </div>
+                                </h:form>
+                            </p:tab>
+
+                            <p:tab title="Gestion de usuarios" titletip="clic para entrar" titleStyleClass="card">
+                                <h:form id="update-form" >
+                                    <p:messages id="msj-update" showDetail="true" autoUpdate="true" closable="true" globalOnly="false"/>
+
+                                    <h:panelGrid>
+
+                                        <p:dataTable  id="result" var="usu" value="#{adminBean.listUsersPer}" 
+                                                      rows="10"
+                                                      paginator="true"
+                                                      paginatorPosition="bottom"
+                                                      paginatorTemplate=" {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                      rowsPerPageTemplate="5,10"
+                                                      reflow="true"
+                                                      styleClass="table-style"
+                                                      selectionMode="single" 
+                                                      rowKey="#{usu.usuario.idusuario}"
+                                                      widgetVar="tablausuarios" emptyMessage="En el momento no hay usuarios activos"
+                                                      filteredValue="#{adminBean.filtro}"
+                                                      >
+                                            <f:facet name="header">
+                                                Usuarios Activos
+                                            </f:facet>
+                                            <f:facet name="header">
+                                                <p:outputPanel>
+                                                    <p:inputText id="globalFilter" onkeyup="PF('tablausuarios').filter()" style="width: 150px" placeholder="Buscar"/>
+                                                </p:outputPanel>
+                                            </f:facet>
+
+
+
+
+                                            <p:column  filterBy="#{usu.persona.nombre}" class="outstyle" headerText="Nombre">
+                                                <h:outputText  value="#{usu.persona.nombre} #{usu.persona.apellido}" />
+                                            </p:column>
+
+                                            <p:column filterBy="#{usu.usuario.username}" class="outstyle" headerText="UserName">
+                                                <h:outputText value="#{usu.usuario.username}"/>
+                                            </p:column>
+
+                                            <p:column filterBy="#{usu.persona.telefono}" class="outstyle" headerText="Telefono"  >
+                                                <h:outputText value="#{usu.persona.telefono}" />
+                                            </p:column>
+
+                                            <p:column class="outstyle" headerText="Email"  >
+                                                <h:outputText value="#{usu.persona.email}" />
+                                            </p:column>
+
+
+                                            <p:column class="outstyle" headerText="Editar" style="text-align: center" >
+                                                <p:commandButton icon="fa fa-edit" 
+                                                                 update="menu-admin:update-form:actua"  title="Actualizar" oncomplete="PF('updateDialog').show()">
+                                                    <f:setPropertyActionListener value="#{usu}" target="#{adminBean.perUserSelect}" />
+                                                </p:commandButton>
+                                            </p:column>
+
+<!--                                            <p:column class="outstyle" headerText="Eliminar" style="text-align: center" >
+                                                <p:commandButton icon="fa fa-trash"  
+                                                                 update="menu-admin:update-form:elim" title="Eliminar" oncomplete="PF('deleteDialog').show()" >
+                                                    <f:setPropertyActionListener value="#{usu}" target="#{adminBean.perSelect}" />
+                                                </p:commandButton>
+
+                                            </p:column>-->
+
+                                        </p:dataTable>
+
+
+                                        <p:dialog id="elim" header="Seguro de eliminar?" 
+                                                  widgetVar="deleteDialog"
+                                                  height="150" width="250"
+                                                  draggable="false" modal="true" resizable="false">
+                                            <p:outputLabel />
+                                            <div class="mt-5 pl-7">
+
+                                                <p:commandButton value="SI" action="#{adminBean.deletePersona(adminBean.perSelect)}"
+                                                                 onclick="PF('deleteDialog').close()" icon="fa fa-check"
+                                                                 update="menu-admin:update-form:result, menu-admin:update-form:msj-update"/>
+
+                                                <p:commandButton  value="NO" onclick="PF('deleteDialog').close()" icon="fa fa-times"/>
+
+
+                                            </div>
+
+                                        </p:dialog>
+
+
+                                        <p:dialog id="actua" header="Datos del usuario" widgetVar="updateDialog" draggable="false"
+                                                  modal="true" resizable="false">
+                                            <p:outputPanel id="updateDetail" >
+                                                <p:panelGrid  columns="2" rendered="#{not empty adminBean.perUserSelect}" 
+                                                              >
+
+
+
+                                                    <p:outputLabel value="Documento" />
+                                                    <p:inputNumber  value="#{adminBean.perUserSelect.persona.documento}" padControl="false" leadingZero="false"/>
+
+                                                    <p:outputLabel value="Nombre:" />
+                                                    <p:inputText value="#{adminBean.perUserSelect.persona.nombre}"/>
+
+
+                                                    <p:outputLabel value="Apellido:" />
+                                                    <p:inputText  value="#{adminBean.perUserSelect.persona.apellido}" />
+
+                                                    <p:outputLabel value="Telefono:" />
+                                                    <p:inputNumber value="#{adminBean.perUserSelect.persona.telefono}" padControl="false" leadingZero="false" />
+
+                                                    <p:outputLabel value="E-mail:" />
+                                                    <p:inputText  value="#{adminBean.perUserSelect.persona.email}"/>
+
+                                                    <p:outputLabel value="Nombre de usuario:" />
+                                                    <p:inputText  value="#{adminBean.perUserSelect.usuario.username}" />
+
+
+
+
+                                                    <p:outputLabel value="Rol:" />
+
+                                                    <p:selectOneMenu id="rol" style="width:310px" value="#{adminBean.perUserSelect.usuario.rol}">
+
+                                                        <f:selectItem itemLabel="#{adminBean.perUserSelect.usuario.rol}" itemValue="#{adminBean.perUserSelect.usuario.rol}" />
+                                                        <f:selectItem itemLabel="Aprendiz" itemValue="APRENDIZ" />
+                                                        <f:selectItem itemLabel="Instructor" itemValue="INSTRUCTOR" />
+                                                        <f:selectItem itemLabel="Funcionario" itemValue="FUNCIONARIO" />
+                                                    </p:selectOneMenu>
+
+
+                                                </p:panelGrid>
+
+                                                <p:commandButton class="form-control" value="Actualizar" action="#{adminBean.updatePersona()}" 
+                                                                 onclick="PF('updateDialog').close();"     
+                                                                 update="menu-admin:update-form:result, update-form:msj-update"/>
+                                            </p:outputPanel>
+
+                                        </p:dialog>
+
+
+                                    </h:panelGrid>
+                                </h:form>
+                            </p:tab>
+                        </p:accordionPanel>
+                    </div>
+                </div>
+            </c:if>
+            <c:if test="#{loginBean.rol ne 'ADMIN'}">
+                <div class="row text-center">
+                    <div class="col-lg-12">
+                        <h1>NO TIENE PERMISOS EN ESTE MÓDULO...CONTÁCTESE CON EL ADMINISTRADOR</h1>
+                    </div>
+                </div>
+            </c:if>
+
+        </ui:define>
+    </ui:composition>
+</html>

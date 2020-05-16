@@ -1,0 +1,14 @@
+model/Persona_.java
+model/HorarioPK_.java
+model/Modulo_.java
+model/Ambiente_.java
+model/Programa_.java
+model/Usuario_.java
+model/Reserva_.java
+model/MatriculaPK_.java
+model/PeticionEquipo_.java
+model/Horario_.java
+model/Matricula_.java
+model/Centro_.java
+model/Equipo_.java
+model/Ficha_.java
