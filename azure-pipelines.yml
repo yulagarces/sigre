@@ -21,6 +21,6 @@ steps:
   inputs:
     SonarCloud: 'conexion_sigre'
     organization: 'yulagarces'
-    scannerMode: 'CLI'
+    scannerMode: 'Other'
     configMode: 'manual'
     cliSources: '.'
